@@ -1,15 +1,6 @@
 <?php
-$servername = "localhost:3306";
-$username = "root";
-$password = "";
-$dbname = "XVEILEEN";
-
-// Conectar a la base de datos
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-if ($conn->connect_error) {
-    die("Conexión fallida: " . $conn->connect_error);
-}
+session_start();
+include 'db.php'; // Archivo de conexión a la base de datos
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $telefono = $_POST['telefono'];
