@@ -57,3 +57,13 @@ CREATE TABLE COMPROBANTE_USUARIO (
     FOREIGN KEY (telefono) REFERENCES USUARIO(telefono),
     PRIMARY KEY (comprobante, telefono)
 );
+
+/*Ultima modificacion para guardar el tipo de archivo de comprobante*/
+ALTER TABLE COMPROBANTE ADD COLUMN tipo_mime VARCHAR(50);
+
+
+/*Creacion tabla de Administracion*/
+CREATE TABLE ADMIN (
+    username VARCHAR(50) PRIMARY KEY,
+    password VARCHAR(255) NOT NULL
+);
