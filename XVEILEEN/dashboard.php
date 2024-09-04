@@ -10,7 +10,7 @@ if (!isset($_SESSION['telefono'])) {
 $telefono = $_SESSION['telefono'];
 
 // Consulta para obtener la información del usuario
-$query = "SELECT monto_pagado, monto_restante FROM USUARIO WHERE telefono = ?";
+$query = "SELECT nombre_completo, monto_pagado, monto_restante FROM USUARIO WHERE telefono = ?";
 $stmt = $conn->prepare($query);
 
 if (!$stmt) {
@@ -19,7 +19,7 @@ if (!$stmt) {
 
 $stmt->bind_param('s', $telefono);
 $stmt->execute();
-$stmt->bind_result($monto_pagado, $monto_restante);
+$stmt->bind_result($nombre_completo, $monto_pagado, $monto_restante);
 $stmt->fetch();
 $stmt->close();
 
@@ -40,41 +40,70 @@ $stmt->execute();
 $result = $stmt->get_result();
 ?>
 
-<h1>Dashboard</h1>
-<p><strong>Monto Pagado:</strong> <?php echo htmlspecialchars($monto_pagado); ?></p>
-<p><strong>Monto Restante:</strong> <?php echo htmlspecialchars($monto_restante); ?></p>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <!-- Incluir Bootstrap CSS -->
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Incluir la hoja de estilos personalizada -->
+    <link href="assets/css/style.css" rel="stylesheet">
+</head>
+<body>
 
-<h2>Comprobantes</h2>
+<div class="container mt-5">
+    <div class="dashboard-container">
+        <h1>Hola, <?php echo htmlspecialchars($nombre_completo); ?>!</h1>
+        <p><strong>Monto Pagado:</strong> <?php echo htmlspecialchars($monto_pagado); ?></p>
+        <p><strong>Monto Restante:</strong> <?php echo htmlspecialchars($monto_restante); ?></p>
 
-<!-- Tabla de comprobantes -->
-<table border="1">
-    <tr>
-        <th>ID Comprobante</th>
-        <th>Acción</th>
-    </tr>
-    <?php
-    if ($result->num_rows > 0) {
-        while ($row = $result->fetch_assoc()) {
-            echo '<tr>';
-            echo '<td>' . htmlspecialchars($row['id_comprobante']) . '</td>';
-            echo '<td><a href="download.php?id_comprobante=' . htmlspecialchars($row['id_comprobante']) . '">Descargar</a></td>';
-            echo '</tr>';
-        }
-    } else {
-        // Si no hay comprobantes, muestra una fila vacía
-        echo '<tr>';
-        echo '<td colspan="2">No hay comprobantes disponibles.</td>';
-        echo '</tr>';
-    }
-    ?>
-</table>
+        <h2>Comprobantes</h2>
+        
+        <!-- Tabla de comprobantes -->
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>ID Comprobante</th>
+                    <th>Acción</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                if ($result->num_rows > 0) {
+                    while ($row = $result->fetch_assoc()) {
+                        echo '<tr>';
+                        echo '<td>' . htmlspecialchars($row['id_comprobante']) . '</td>';
+                        echo '<td><a href="download.php?id_comprobante=' . htmlspecialchars($row['id_comprobante']) . '" class="btn btn-primary btn-sm">Descargar</a></td>';
+                        echo '</tr>';
+                    }
+                } else {
+                    // Si no hay comprobantes, muestra una fila vacía
+                    echo '<tr>';
+                    echo '<td colspan="2" class="text-center">No hay comprobantes disponibles.</td>';
+                    echo '</tr>';
+                }
+                ?>
+            </tbody>
+        </table>
 
-<!-- Botón para subir comprobantes -->
-<a href="upload_comprobante.php">
-    <button type="button">Subir Comprobante</button>
-</a>
+        <!-- Botones en la misma línea -->
+        <div class="row">
+            <div class="col-md-6">
+                <a href="upload_comprobante.php" class="btn btn-primary w-100">Subir Comprobante</a>
+            </div>
+            <div class="col-md-6">
+                <a href="logout.php" class="btn btn-secondary w-100">Cerrar Sesión</a>
+            </div>
+        </div>
+    </div>
+</div>
 
-<a href="logout.php">Cerrar Sesión</a>
+<!-- Incluir Bootstrap JS -->
+<script src="assets/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
 
 <?php
 $stmt->close();

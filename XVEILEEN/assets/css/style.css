@@ -1,0 +1,175 @@
+/* General Styles */
+body {
+    background-color: #f7eff4; 
+    font-family: 'Arial', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+h1 {
+    color: #6a0dad; /* Tonalidad morada */
+    margin-bottom: 2rem;
+    font-size: 26px;
+    text-align: center;
+}
+
+p, label {
+    font-size: 1.1em;
+    color: #6a0dad; /* Tonalidad morada */
+    font-weight: bold;
+}
+
+/* Container Styles */
+.container, .login-container, .dashboard-container, .upload-container {
+    background-color: #ffffff;
+    padding: 2.5rem;
+    border-radius: 10px;
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+    max-width: 800px;
+    width: 100%;
+    box-sizing: border-box;
+    text-align: center;
+    margin-top: 50px;
+}
+
+/* Form Styles */
+.form-group {
+    margin-bottom: 1.5rem;
+    text-align: left;
+}
+
+.form-control, input[type="file"] {
+    padding: 0.75rem;
+    font-size: 16px;
+    width: 100%;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+/* Button Styles */
+button, .btn {
+    background-color: #c593cf; /* Tonalidad rosa */
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+    font-size: 16px;
+}
+
+button:hover, .btn:hover {
+    background-color: #bf77d3; /* Rosa más oscuro */
+}
+
+.btn-secondary {
+    background-color: #6a0dad; /* Tonalidad morada */
+    border: 1px solid #6a0dad;
+    color: white;
+}
+
+.btn-secondary:hover {
+    background-color: #4a00a0; /* Morado más oscuro */
+    border-color: #4a00a0;
+}
+
+/* Text Styles */
+.text-center {
+    margin-top: 2rem;
+    font-size: 14px;
+}
+
+.text-center a, .table-container a {
+    color: #c593cf; 
+    text-decoration: none;
+}
+
+.text-center a:hover, .table-container a:hover {
+    text-decoration: underline;
+}
+
+.error-message {
+    color: red;
+    margin-top: 1rem;
+    font-size: 14px;
+}
+
+/* Table Styles */
+.table-container, .table {
+    width: 100%;
+    text-align: left;
+    margin-top: 20px;
+}
+
+.table-container table, .table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.table th, .table td {
+    padding: 12px;
+    text-align: center;
+    border: 1px solid #ddd;
+}
+
+.table th {
+    background-color: #c593cf; /* Tonalidad rosa */
+    color: white;
+}
+
+.table td {
+    background-color: #f9f9f9;
+}
+
+.table tbody tr:hover {
+    background-color: #f1f1f1;
+}
+
+/* Container principal para la página con bordes redondeados */
+.upload-container {
+    background-color: #ffffff;
+    padding: 2.5rem;
+    border-radius: 15px; /* Contenedor redondeado */
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    width: 100%;
+    box-sizing: border-box;
+    text-align: center;
+    margin-top: 50px;
+}
+
+/* Estilo del título */
+.upload-container h1 {
+    color: #6a0dad; /* Color morado */
+    font-size: 26px;
+    margin-bottom: 20px;
+}
+
+/* Mobile Styles */
+@media (max-width: 576px) {
+    .container, .login-container, .dashboard-container, .upload-container {
+        padding: 1.5rem;
+        margin: 0 1rem;
+    }
+
+    h1 {
+        font-size: 22px;
+    }
+
+    .form-control {
+        font-size: 14px;
+        padding: 0.5rem;
+    }
+
+    .btn, button {
+        padding: 0.5rem;
+        font-size: 14px;
+    }
+
+    .text-center {
+        margin-top: 1.5rem;
+    }
+}
