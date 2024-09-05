@@ -41,12 +41,20 @@ p, label {
     text-align: left;
 }
 
-.form-control, input[type="file"] {
+.form-control {
     padding: 0.75rem;
     font-size: 16px;
     width: 100%;
     border: 1px solid #ddd;
     border-radius: 5px;
+}
+
+input[type="file"] {
+    font-size: 16px; /* Ajusta el tamaño del texto */
+    padding: 10px; /* Espaciado interno */
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #ffffff; /* Color de fondo blanco */
 }
 
 /* Button Styles */
@@ -128,11 +136,10 @@ button:hover, .btn:hover {
     background-color: #f1f1f1;
 }
 
-/* Container principal para la página con bordes redondeados */
 .upload-container {
     background-color: #ffffff;
     padding: 2.5rem;
-    border-radius: 15px; /* Contenedor redondeado */
+    border-radius: 15px; 
     box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
     max-width: 600px;
     width: 100%;
@@ -141,7 +148,6 @@ button:hover, .btn:hover {
     margin-top: 50px;
 }
 
-/* Estilo del título */
 .upload-container h1 {
     color: #6a0dad; /* Color morado */
     font-size: 26px;

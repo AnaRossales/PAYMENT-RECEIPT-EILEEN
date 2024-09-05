@@ -51,7 +51,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Subir Comprobante</title>
-    <link href="assets/css/style.css" rel="stylesheet"> <!-- Vincula la hoja de estilo -->
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet">
+    <link href="assets/css/style.css" rel="stylesheet">
 </head>
 <body>
 <div class="dashboard-container">
@@ -59,7 +60,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <form method="POST" enctype="multipart/form-data" action="">
         <div class="form-group">
             <label for="monto_pagado">Monto Pagado:</label>
-            <input type="number" name="monto_pagado" id="monto_pagado" class="form-control" required>
+            <input type="number" name="monto_pagado" id="monto_pagado" class="form-control" min="0" required>
         </div>
         <div class="form-group">
             <label for="comprobante">Selecciona el comprobante:</label>
@@ -67,6 +68,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         </div>
         <div class="button-container">
             <button type="submit" class="btn btn-primary">Subir Comprobante</button>
+            <br>
+            <center>
+            <a href="dashboard.php" class="btn btn-secondary">Regresar al Dashboard</a>
+            </center>
         </div>
     </form>
 </div>

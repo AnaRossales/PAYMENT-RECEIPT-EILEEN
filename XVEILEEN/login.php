@@ -42,11 +42,7 @@ $conn->close();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Iniciar Sesión</title>
-    
-    <!-- Incluir Bootstrap CSS -->
     <link href="assets/css/bootstrap.min.css" rel="stylesheet">
-    
-    <!-- Incluir la hoja de estilos personalizada -->
     <link href="assets/css/style.css" rel="stylesheet">
 </head>
 <body>
