@@ -1,6 +1,7 @@
 <?php
 session_start();
 include 'db.php'; // Conexión a la base de datos
+include 'functions.php';
 
 if (!isset($_SESSION['telefono'])) {
     header("Location: login.php");
@@ -16,8 +17,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $tipo_mime = $_FILES['comprobante']['type']; // Obtiene el tipo MIME del archivo
         $monto_pagado = $_POST['monto_pagado']; // Monto del comprobante subido
 
+        while(){
+
+        }
+
         // Inserta el archivo en la tabla COMPROBANTE
-        $query = "INSERT INTO COMPROBANTE (archivo_comprobante, tipo_mime) VALUES (?, ?)";
+        $query = "INSERT INTO COMPROBANTE (archivo_comprobante, tipo_mime, aprobado) VALUES (?, ?, 0)"; // Inicialmente no aprobado
         $stmt = $conn->prepare($query);
         $stmt->bind_param('ss', $archivo, $tipo_mime);
         $stmt->send_long_data(0, $archivo);
@@ -26,22 +31,50 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         // Obtener el ID del comprobante insertado
         $id_comprobante = $stmt->insert_id;
 
-        // Inserta en la tabla COMPROBANTE_USUARIO
-        $query = "INSERT INTO COMPROBANTE_USUARIO (comprobante, telefono) VALUES (?, ?)";
-        $stmt = $conn->prepare($query);
-        $stmt->bind_param('is', $id_comprobante, $telefono);
-        $stmt->execute();
 
-        // Actualizar los montos en la tabla USUARIO
-        $query = "UPDATE USUARIO SET monto_pagado = monto_pagado + ?, monto_restante = monto_restante - ? WHERE telefono = ?";
-        $stmt->prepare($query);
-        $stmt->bind_param('dds', $monto_pagado, $monto_pagado, $telefono);
-        $stmt->execute();
+        // Después de la lógica de subida del comprobante, agrega el código de envío de correo:
+if ($archivo_subido_exitosamente) {
+    // Configura y envía el correo al administrador
+    require 'vendor/autoload.php'; // Cargar PHPMailer
+    
+    $mail = new PHPMailer(true);
+    try {
+        $mail->isSMTP();
+        $mail->Host = 'smtp.example.com';
+        $mail->SMTPAuth = true;
+        $mail->Username = 'your-email@example.com';
+        $mail->Password = 'your-email-password';
+        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+        $mail->Port = 587;
 
-        echo "Comprobante subido exitosamente. El monto restante ha sido actualizado.";
-    } else {
-        echo "Error al subir el archivo.";
+        $mail->setFrom('your-email@example.com', 'Your Name');
+        $mail->addAddress('admin@example.com', 'Admin');
+        $mail->isHTML(true);
+        $mail->Subject = 'Nuevo comprobante subido';
+        $mail->Body    = 'El usuario ha subido un nuevo comprobante.';
+
+        $mail->send();
+        echo 'Correo enviado exitosamente';
+    } catch (Exception $e) {
+        echo "No se pudo enviar el correo. Error: {$mail->ErrorInfo}";
     }
+}
+ //ESTA PARTE NO FUNCIONA, REVISAAAAAA
+          // Enviar correo al administrador
+          $admin_email = "fourier.anadev@gmail.com"; // Reemplaza con el correo del administrador
+          $subject = "Nuevo comprobante subido por el usuario $telefono";
+          $message = "El usuario con teléfono $telefono ha subido un comprobante de pago de $$monto_pagado.";
+          $headers = "From: noreply@tudominio.com"; // Reemplaza con el correo que envía el aviso
+  
+          // Envía el correo
+          if (mail($admin_email, $subject, $message, $headers)) {
+              echo "Comprobante subido exitosamente. Pendiente de aprobación.";
+          } else {
+              echo "Comprobante subido, avise al encargado para su aprobacion";
+          }
+      } else {
+          echo "Error al subir el archivo.";
+      }
 }
 ?>
 
@@ -69,9 +102,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <div class="button-container">
             <button type="submit" class="btn btn-primary">Subir Comprobante</button>
             <br>
-            <center>
             <a href="dashboard.php" class="btn btn-secondary">Regresar al Dashboard</a>
-            </center>
         </div>
     </form>
 </div>
